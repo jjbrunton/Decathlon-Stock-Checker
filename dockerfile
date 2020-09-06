@@ -8,10 +8,11 @@ RUN dotnet restore -r linux-arm
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish -c release -o /app -r linux-arm --self-contained false
+WORKDIR /source
+RUN dotnet publish -c release -o out -r linux-arm
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim-arm32v7
-WORKDIR /app
-COPY --from=build /app .
-ENTRYPOINT ["./dotnetapp"]
+WORKDIR /source
+COPY --from=build /source/out ./
+ENTRYPOINT ["dotnet", "DecathlonStock.dll"]
