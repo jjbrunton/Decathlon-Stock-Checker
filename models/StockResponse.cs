@@ -1,4 +1,4 @@
-namespace DecathlonStock
+namespace Decathlon.Stock.Checker.Models
 {
 
     public partial class StockResponse
